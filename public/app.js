@@ -99,6 +99,7 @@ function createInstanceRow(instance) {
         <div class="instance-port">${instance.port}</div>
         <div class="instance-name">${instance.name}</div>
         <div class="instance-description">${instance.description}</div>
+        <div class="instance-workspace">${instance.workspace}</div>
         <div class="instance-status">
             ${statusDot}
             <span>${instance.status}</span>
@@ -114,6 +115,7 @@ function createInstanceRow(instance) {
             ${instance.status === 'running' ? `
                 <button class="btn btn-small btn-primary" onclick="openInstance('${instance.port}')">Open</button>
             ` : ''}
+            <button class="btn btn-small btn-secondary" onclick="removeInstance('${instance.port}')">Remove</button>
             <div class="instance-urls">
                 <a href="${instance.url}" target="_blank" class="url-link">local</a>
                 <a href="${instance.lanUrl}" target="_blank" class="url-link">wifi</a>
@@ -179,6 +181,30 @@ function stopAllInstances() {
     showToast('Stopping all instances...');
 }
 
+async function removeInstance(port) {
+    if (!confirm(`Are you sure you want to remove the instance on port ${port}?`)) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/instances/${port}`, {
+            method: 'DELETE'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showToast(`Instance on port ${port} removed successfully`);
+            // Refresh instances list
+            socket.emit('refresh-instances');
+        } else {
+            showToast(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        showToast(`Error removing instance: ${error.message}`);
+    }
+}
+
 // Add instance functionality
 function showAddForm() {
     document.getElementById('add-instance-form').style.display = 'block';
@@ -190,21 +216,49 @@ function hideAddForm() {
     document.getElementById('new-port').value = '';
     document.getElementById('new-name').value = '';
     document.getElementById('new-description').value = '';
+    document.getElementById('new-workspace').value = '';
 }
 
-function addInstance() {
+async function addInstance() {
     const port = document.getElementById('new-port').value;
     const name = document.getElementById('new-name').value;
     const description = document.getElementById('new-description').value;
+    const workspace = document.getElementById('new-workspace').value;
     
-    if (!port || !name) {
-        showToast('Port and name are required');
+    if (!port || !name || !workspace) {
+        showToast('Port, name, and workspace are required');
         return;
     }
     
-    // This would require server-side implementation
-    showToast('Add instance functionality would be implemented here');
-    hideAddForm();
+    try {
+        const response = await fetch('/api/instances', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                port: parseInt(port),
+                name,
+                description,
+                workspace,
+                icon: '⚡',
+                color: '#6b7280'
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showToast(`Instance "${name}" added successfully`);
+            hideAddForm();
+            // Refresh instances list
+            socket.emit('refresh-instances');
+        } else {
+            showToast(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        showToast(`Error adding instance: ${error.message}`);
+    }
 }
 
 // Service actions

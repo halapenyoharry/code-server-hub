@@ -110,6 +110,15 @@ io.on('connection', async (socket) => {
     }
   });
   
+  socket.on('refresh-instances', async () => {
+    try {
+      const instances = await codeServerManager.getAllInstances();
+      socket.emit('instances-update', { instances });
+    } catch (error) {
+      console.error('Error refreshing instances:', error);
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected');
   });

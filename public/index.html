@@ -170,6 +170,12 @@
             border-color: var(--danger);
             color: white;
         }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            border-color: var(--border);
+            color: var(--text-secondary);
+        }
         
         .btn-small {
             padding: 4px 8px;
@@ -191,7 +197,7 @@
         
         .instance-row {
             display: grid;
-            grid-template-columns: 60px 120px 1fr 100px 300px;
+            grid-template-columns: 60px 120px 1fr 200px 100px 300px;
             gap: 15px;
             align-items: center;
             padding: 12px 15px;
@@ -226,6 +232,15 @@
         .instance-description {
             color: var(--text-secondary);
             font-size: 0.9em;
+        }
+
+        .instance-workspace {
+            color: var(--text-muted);
+            font-size: 0.85em;
+            font-family: 'Monaco', 'Consolas', monospace;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         
         .instance-status {
@@ -283,7 +298,7 @@
         
         .form-row {
             display: grid;
-            grid-template-columns: 100px 100px 1fr 100px;
+            grid-template-columns: 80px 120px 1fr 1fr 120px;
             gap: 10px;
             align-items: center;
         }
@@ -433,7 +448,7 @@
                     <span class="metric-value" id="memory-usage">0%</span>
                 </div>
                 <div class="system-metric">
-                    <span>Network:</span>
+                    <span>IP Address:</span>
                     <span class="metric-value" id="network-ip">--</span>
                 </div>
             </div>
@@ -462,8 +477,9 @@
                 <div class="add-instance-form" id="add-instance-form">
                     <div class="form-row">
                         <input type="number" class="form-input" placeholder="5256" id="new-port">
-                        <input type="text" class="form-input" placeholder="Staging" id="new-name">
-                        <input type="text" class="form-input" placeholder="Staging environment" id="new-description">
+                        <input type="text" class="form-input" placeholder="Neo4j Explorer" id="new-name">
+                        <input type="text" class="form-input" placeholder="Graph database exploration" id="new-description">
+                        <input type="text" class="form-input" placeholder="/Users/harold/Projects/neo4j-project" id="new-workspace">
                         <div>
                             <button class="btn btn-primary" onclick="addInstance()">Add</button>
                             <button class="btn" onclick="hideAddForm()">Cancel</button>
