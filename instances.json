@@ -1,3 +1,12 @@
 {
-  "instances": {}
+  "instances": {
+    "5358": {
+      "port": 5358,
+      "name": "test",
+      "description": "test",
+      "workspace": "/Users/harold/Projects/claude-api-server",
+      "icon": "⚡",
+      "color": "#6b7280"
+    }
+  }
 }
