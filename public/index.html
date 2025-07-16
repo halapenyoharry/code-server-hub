@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Server Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #606060;
+            --accent: #0099ff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        /* Clean header - just title and essential info */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-size: 1.4em;
+            font-weight: 500;
+            color: var(--accent);
+        }
+        
+        .system-info {
+            display: flex;
+            gap: 20px;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+        
+        .system-metric {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .metric-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .system-note {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        
+        /* Clean tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-button.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .tab-button:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Code Server instances - table-like but visual */
+        .instances-container {
+            margin-bottom: 30px;
+        }
+        
+        .instances-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .instances-title {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        
+        .bulk-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            border-color: var(--warning);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-small {
+            padding: 4px 8px;
+            font-size: 0.8em;
+        }
+        
+        .btn-add {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* Instance list - clean rows */
+        .instances-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        
+        .instance-row {
+            display: grid;
+            grid-template-columns: 60px 120px 1fr 100px 300px;
+            gap: 15px;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .instance-row:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        .instance-row.running {
+            border-left: 3px solid var(--success);
+        }
+        
+        .instance-row.stopped {
+            border-left: 3px solid var(--text-muted);
+            opacity: 0.7;
+        }
+        
+        .instance-port {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .instance-name {
+            font-weight: 500;
+        }
+        
+        .instance-description {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+        
+        .instance-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+        
+        .status-dot.stopped {
+            background: var(--text-muted);
+        }
+        
+        .instance-actions {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .instance-urls {
+            display: flex;
+            gap: 8px;
+            font-size: 0.8em;
+        }
+        
+        .url-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: 'Monaco', 'Consolas', monospace;
+            padding: 2px 4px;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+        }
+        
+        .url-link:hover {
+            color: var(--accent);
+            background: var(--bg-primary);
+        }
+        
+        /* Add instance form */
+        .add-instance-form {
+            display: none;
+            background: var(--bg-tertiary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 100px 100px 1fr 100px;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .form-input {
+            padding: 6px 8px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.9em;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        /* Services grid for discovered tab */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .service-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 15px;
+            transition: all 0.2s ease;
+        }
+        
+        .service-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+        
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .service-icon {
+            font-size: 1.5em;
+            margin-right: 8px;
+        }
+        
+        .service-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .service-type {
+            font-size: 0.8em;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .service-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+        }
+        
+        .service-details {
+            margin: 10px 0;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+        
+        .service-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            padding: 12px 20px;
+            display: none;
+            z-index: 1000;
+            font-size: 0.9em;
+        }
+        
+        .toast.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateX(-50%) translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Hide tab content */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .instance-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .system-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">Code Server Hub</div>
+            <div class="system-info">
+                <div class="system-metric">
+                    <span>CPU:</span>
+                    <span class="metric-value" id="cpu-usage">0%</span>
+                </div>
+                <div class="system-metric">
+                    <span>Memory:</span>
+                    <span class="metric-value" id="memory-usage">0%</span>
+                </div>
+                <div class="system-metric">
+                    <span>Network:</span>
+                    <span class="metric-value" id="network-ip">--</span>
+                </div>
+            </div>
+        </div>
+        <div class="system-note">System resources (Wi-Fi preferred for iPad access)</div>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('instances')">Code Servers</button>
+            <button class="tab-button" onclick="showTab('services')">Discovered Services</button>
+        </div>
+        
+        <div class="tab-content active" id="instances-tab">
+            <div class="instances-container">
+                <div class="instances-header">
+                    <div class="instances-title">Your Code Server Instances</div>
+                    <div class="bulk-actions">
+                        <button class="btn btn-add" onclick="showAddForm()">
+                            <span>+</span>
+                            <span>Add Instance</span>
+                        </button>
+                        <button class="btn btn-success" onclick="startAllInstances()">Start All</button>
+                        <button class="btn btn-danger" onclick="stopAllInstances()">Stop All</button>
+                    </div>
+                </div>
+                
+                <div class="add-instance-form" id="add-instance-form">
+                    <div class="form-row">
+                        <input type="number" class="form-input" placeholder="5256" id="new-port">
+                        <input type="text" class="form-input" placeholder="Staging" id="new-name">
+                        <input type="text" class="form-input" placeholder="Staging environment" id="new-description">
+                        <div>
+                            <button class="btn btn-primary" onclick="addInstance()">Add</button>
+                            <button class="btn" onclick="hideAddForm()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instances-list" id="instances-list">
+                    <!-- Instances will be populated here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="services-tab">
+            <div class="services-grid" id="services-grid">
+                <!-- Services will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast"></div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
