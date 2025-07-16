@@ -63,7 +63,7 @@ function createServiceCard(service) {
         </div>
         
         <div class="service-actions">
-            <button class="btn btn-small btn-primary" onclick="openService(${service.port})">Open</button>
+            <button class="btn btn-small btn-primary" onclick="openServiceUrl('${service.url}')">Open</button>
             <button class="btn btn-small" onclick="viewDetails('${service.id}')">Details</button>
             <button class="btn btn-small btn-danger" onclick="stopService('${service.id}')">Stop</button>
         </div>
@@ -118,7 +118,7 @@ function createInstanceRow(instance) {
             <button class="btn btn-small btn-secondary" onclick="removeInstance('${instance.port}')">Remove</button>
             <div class="instance-urls">
                 <a href="${instance.url}" target="_blank" class="url-link">local</a>
-                <a href="${instance.lanUrl}" target="_blank" class="url-link">wifi</a>
+                <a href="${instance.lanUrl}" target="_blank" class="url-link">network</a>
             </div>
         </div>
     `;
@@ -168,7 +168,7 @@ function restartInstance(port) {
 }
 
 function openInstance(port) {
-    window.open(`http://localhost:${port}`, '_blank');
+    window.open(`http://lothal.local:${port}`, '_blank');
 }
 
 function startAllInstances() {
@@ -264,6 +264,10 @@ async function addInstance() {
 // Service actions
 function openService(port) {
     window.open(`http://localhost:${port}`, '_blank');
+}
+
+function openServiceUrl(url) {
+    window.open(url, '_blank');
 }
 
 function stopService(serviceId) {

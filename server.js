@@ -130,11 +130,12 @@ setupRoutes(app, { services, codeServers, codeServerManager });
 // Start server
 const PORT = process.env.PORT || 7777;
 server.listen(PORT, '0.0.0.0', () => {
+  const hostname = require('os').hostname();
   console.log(`
 🚀 Code Server Hub running!
 
 Local: http://localhost:${PORT}
-Network: http://${require('os').networkInterfaces()['en0']?.[0]?.address || 'YOUR_IP'}:${PORT}
+Network: http://${hostname}:${PORT}
 
 Features:
 ✅ Manage YOUR prepared code-server instances (5253, 5254, 5255)
