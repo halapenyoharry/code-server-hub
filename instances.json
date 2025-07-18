@@ -1,5 +1,21 @@
 {
   "instances": {
+    "5253": {
+      "port": 5253,
+      "name": "Harold Dev",
+      "description": "Main development environment with Cline",
+      "workspace": "/Users/harold/code-server-instances/harold-dev/workspace",
+      "icon": "🧠",
+      "color": "#0099ff"
+    },
+    "5254": {
+      "port": 5254,
+      "name": "Harold Dev Clone",
+      "description": "Clone development environment",
+      "workspace": "/Users/harold/code-server-instances/harold-dev-clone/workspace",
+      "icon": "🔄",
+      "color": "#10b981"
+    },
     "5358": {
       "port": 5358,
       "name": "test",

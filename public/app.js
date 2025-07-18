@@ -1,6 +1,37 @@
 // WebSocket connection
 const socket = io();
 
+// Device detection
+const isIPhone = /iPhone/.test(navigator.userAgent) && !window.navigator.standalone;
+const isIPad = /iPad/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isIOS = isIPhone || isIPad;
+const isMobile = isIPhone || /Android/.test(navigator.userAgent);
+
+// PWA and standalone mode detection
+function checkStandaloneMode() {
+    const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+    
+    if (isStandalone) {
+        // Running in standalone mode (fullscreen, no browser chrome)
+        document.body.classList.add('standalone-mode');
+        console.log('Running in standalone mode (no browser chrome)');
+    } else {
+        // Show install prompt on supported devices
+        if ('serviceWorker' in navigator) {
+            // Could add install prompt here
+            console.log('Add to Home Screen available for fullscreen experience');
+        }
+    }
+    
+    // Add device-specific classes
+    if (isIPhone) document.body.classList.add('device-iphone');
+    if (isIPad) document.body.classList.add('device-ipad');
+    if (isMobile) document.body.classList.add('device-mobile');
+}
+
+// Check on load
+checkStandaloneMode();
+
 // State
 let services = new Map();
 let preparedInstances = [];
@@ -114,6 +145,7 @@ function createInstanceRow(instance) {
             ` : ''}
             ${instance.status === 'running' ? `
                 <button class="btn btn-small btn-primary" onclick="openInstance('${instance.port}')">Open</button>
+                <button class="btn btn-small btn-accent" onclick="createInstanceApp('${instance.port}', '${instance.name}')">📱 Create App</button>
             ` : ''}
             <button class="btn btn-small btn-secondary" onclick="removeInstance('${instance.port}')">Remove</button>
             <div class="instance-urls">
@@ -168,7 +200,16 @@ function restartInstance(port) {
 }
 
 function openInstance(port) {
-    window.open(`http://lothal.local:${port}`, '_blank');
+    // Check if we're in standalone mode
+    const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+    
+    if (isStandalone) {
+        // In standalone mode, navigate directly to maintain PWA experience
+        window.location.href = `https://code.local:${port}`;
+    } else {
+        // In browser mode, open in new tab
+        window.open(`https://code.local:${port}`, '_blank');
+    }
 }
 
 function startAllInstances() {
@@ -207,7 +248,24 @@ async function removeInstance(port) {
 
 // Add instance functionality
 function showAddForm() {
-    document.getElementById('add-instance-form').style.display = 'block';
+    const form = document.getElementById('add-instance-form');
+    form.style.display = 'block';
+    
+    // iPhone-specific enhancements
+    if (isIPhone) {
+        // Smooth scroll to form
+        setTimeout(() => {
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Focus first input for better UX
+            document.getElementById('new-port').focus();
+        }, 100);
+        
+        // Add haptic feedback if available
+        if (window.navigator.vibrate) {
+            window.navigator.vibrate(10);
+        }
+    }
 }
 
 function hideAddForm() {
@@ -306,16 +364,7 @@ async function updateSystemInfo() {
     }
 }
 
-// Toast notifications
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3000);
-}
+// Toast notifications (enhanced version moved below)
 
 // Socket event handlers
 socket.on('control-result', (result) => {
@@ -336,6 +385,76 @@ socket.on('instance-result', (result) => {
 
 // Update system info every 2 seconds
 setInterval(updateSystemInfo, 2000);
+
+// Create individual app for code-server instance
+function createInstanceApp(port, name) {
+    const url = `https://code.local:${port}`;
+    
+    if (/iPhone/.test(navigator.userAgent)) {
+        // iPhone instructions
+        showToast(`📱 To create "${name}" app: Open ${url} in Safari → Share → Add to Home Screen`, 8000);
+        
+        // Also open the URL for convenience
+        setTimeout(() => {
+            window.open(url, '_blank');
+        }, 1000);
+    } else if (/iPad/.test(navigator.userAgent)) {
+        // iPad instructions
+        showToast(`📱 Opening "${name}" - then tap Share → Add to Home Screen for fullscreen app`, 6000);
+        window.open(url, '_blank');
+    } else {
+        // Desktop/Android
+        showToast(`💻 Opening ${name} - look for "Install" button in address bar`, 5000);
+        window.open(url, '_blank');
+    }
+}
+
+// Enhanced toast for longer messages
+function showToast(message, duration = 3000) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, duration);
+}
+
+// Pull-to-refresh for iPhone
+if (isIPhone) {
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    document.addEventListener('touchstart', (e) => {
+        touchStartY = e.changedTouches[0].screenY;
+    });
+    
+    document.addEventListener('touchend', (e) => {
+        touchEndY = e.changedTouches[0].screenY;
+        handlePullToRefresh();
+    });
+    
+    function handlePullToRefresh() {
+        // Check if we're at the top of the page
+        if (window.scrollY === 0) {
+            const pullDistance = touchEndY - touchStartY;
+            
+            // If pulled down more than 100px, refresh
+            if (pullDistance > 100) {
+                showToast('Refreshing services...');
+                
+                // Haptic feedback
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(20);
+                }
+                
+                // Refresh data
+                socket.emit('request-services-update');
+                updateSystemInfo();
+            }
+        }
+    }
+}
 
 // Initial load
 updateSystemInfo();

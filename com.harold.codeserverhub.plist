@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.harold.codeserverhub</string>
+    
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/harold/.nvm/versions/node/v24.3.0/bin/node</string>
+        <string>/Users/harold/Projects/code-server-hub/server.js</string>
+    </array>
+    
+    <key>WorkingDirectory</key>
+    <string>/Users/harold/Projects/code-server-hub</string>
+    
+    <key>RunAtLoad</key>
+    <true/>
+    
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    
+    <key>StandardOutPath</key>
+    <string>/Users/harold/Library/Logs/codeserverhub.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/Users/harold/Library/Logs/codeserverhub.error.log</string>
+    
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin</string>
+        <key>NODE_ENV</key>
+        <string>production</string>
+        <key>PORT</key>
+        <string>7777</string>
+    </dict>
+</dict>
+</plist>

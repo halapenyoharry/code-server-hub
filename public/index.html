@@ -2,7 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <!-- iOS Web App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Code Server Hub">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230099ff'/><text y='50' x='50' text-anchor='middle' dominant-baseline='middle' font-size='40' fill='white'>💻</text></svg>">
     <title>Code Server Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -32,12 +45,85 @@
             color: var(--text-primary);
             line-height: 1.5;
             overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            /* iOS safe area support - but not top in standalone mode */
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            padding-bottom: env(safe-area-inset-bottom);
+            /* iOS optimizations */
+            -webkit-overflow-scrolling: touch;
+            -webkit-text-size-adjust: 100%;
+            /* Dynamic viewport height with fallback */
+            min-height: 100vh;
+            /* Force full height in standalone */
+            height: 100vh;
+        }
+        
+        /* Support for dynamic viewport height on modern browsers */
+        @supports (height: 100dvh) {
+            body {
+                min-height: 100dvh;
+            }
+        }
+        
+        /* Standalone mode optimizations (when added to home screen) */
+        @media (display-mode: standalone) {
+            body {
+                /* Let content go under the status bar */
+                padding-top: 0;
+                /* Use full viewport height */
+                height: 100vh;
+            }
+            
+            .header {
+                /* Make header start from very top */
+                padding-top: calc(env(safe-area-inset-top, 44px) + 15px);
+                background: var(--bg-primary);
+                /* Ensure it covers the status bar area */
+                position: relative;
+                z-index: 10;
+            }
+            
+            .container {
+                /* Remove top padding since header handles it */
+                padding-top: 0;
+            }
+        }
+        
+        /* Alternative detection for older iOS */
+        body.standalone-mode {
+            padding-top: 0;
+            height: 100vh;
+        }
+        
+        body.standalone-mode .header {
+            padding-top: calc(env(safe-area-inset-top, 44px) + 15px);
+            background: var(--bg-primary);
+            position: relative;
+            z-index: 10;
         }
         
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 15px;
+            /* Add extra padding on very small screens */
+        }
+        
+        /* Full width on mobile, constrained on larger screens */
+        @media (max-width: 768px) {
+            .container {
+                max-width: none;
+                width: 100%;
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 8px;
+            }
         }
         
         /* Clean header - just title and essential info */
@@ -132,15 +218,23 @@
         }
         
         .btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 6px;
             background: var(--bg-secondary);
             color: var(--text-primary);
             cursor: pointer;
             transition: all 0.2s ease;
-            font-size: 0.85em;
+            font-size: 0.9em;
             font-weight: 500;
+            /* iOS touch target minimum 44px */
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            /* Prevent zoom on touch */
+            touch-action: manipulation;
         }
         
         .btn:hover {
@@ -177,9 +271,17 @@
             color: var(--text-secondary);
         }
         
+        .btn-accent {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+        
         .btn-small {
-            padding: 4px 8px;
-            font-size: 0.8em;
+            padding: 6px 12px;
+            font-size: 0.85em;
+            /* Still maintain minimum touch target on mobile */
+            min-height: 40px;
         }
         
         .btn-add {
@@ -304,17 +406,21 @@
         }
         
         .form-input {
-            padding: 6px 8px;
+            padding: 8px 12px;
             border: 1px solid var(--border);
-            border-radius: 4px;
+            border-radius: 6px;
             background: var(--bg-secondary);
             color: var(--text-primary);
             font-size: 0.9em;
+            /* iOS optimizations */
+            -webkit-appearance: none;
+            border-radius: 6px; /* Override iOS default styling */
         }
         
         .form-input:focus {
             outline: none;
             border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 153, 255, 0.2);
         }
         
         /* Services grid for discovered tab */
@@ -420,16 +526,144 @@
             display: block;
         }
         
-        /* Responsive */
+        /* iPhone-specific enhancements */
+        body.device-iphone .add-instance-form {
+            position: sticky;
+            top: 10px;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.device-iphone .form-row {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        body.device-iphone .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px; /* Prevent zoom */
+            border-radius: 10px; /* iOS style */
+        }
+        
+        body.device-iphone .form-row > div {
+            display: flex;
+            gap: 10px;
+        }
+        
+        body.device-iphone .form-row button {
+            flex: 1;
+            padding: 12px;
+        }
+        
+        /* iPad maintains desktop-like layout */
+        body.device-ipad .form-row {
+            /* Keep original grid */
+        }
+        
+        /* Mobile-first responsive design */
         @media (max-width: 768px) {
-            .instance-row {
-                grid-template-columns: 1fr;
-                gap: 8px;
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
             }
             
             .system-info {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 15px;
+                width: 100%;
+            }
+            
+            .system-metric {
+                font-size: 0.8em;
+            }
+            
+            .title {
+                font-size: 1.2em;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .tab-button {
+                flex-shrink: 0;
+                padding: 12px 20px;
+                min-width: 120px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .instance-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 15px;
+            }
+            
+            .instances-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .bulk-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                width: 100%;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .form-input {
+                padding: 12px;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-card {
+                padding: 20px;
+            }
+            
+            .instance-actions {
                 flex-direction: column;
                 gap: 8px;
+                width: 100%;
+            }
+            
+            .instance-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .system-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .bulk-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                padding: 12px 16px;
+                font-size: 0.95em;
+            }
+            
+            .instance-urls {
+                flex-direction: column;
+                gap: 4px;
             }
         }
     </style>
