@@ -126,32 +126,39 @@ function createInstanceRow(instance) {
         '<div class="status-dot"></div>' : 
         '<div class="status-dot stopped"></div>';
     
+    // Type icon based on instance type
+    const typeIcon = instance.type === 'gotty' ? '🖥️' : '💻';
+    
+    // Info display - show command for GoTTY, workspace for code-server
+    const infoDisplay = instance.type === 'gotty' ? 
+        `<code>${instance.command || 'bash'}</code>` : 
+        instance.workspace;
+    
     row.innerHTML = `
-        <div class="instance-port">${instance.port}</div>
+        <div class="instance-type" title="${instance.type}">${typeIcon}</div>
         <div class="instance-name">${instance.name}</div>
-        <div class="instance-description">${instance.description}</div>
-        <div class="instance-workspace">${instance.workspace}</div>
+        <div class="instance-port">${instance.port}</div>
         <div class="instance-status">
             ${statusDot}
             <span>${instance.status}</span>
+        </div>
+        <div class="instance-urls">
+            ${instance.status === 'running' ? `
+                <a href="${instance.url}" target="_blank" class="url-link">localhost</a>
+                <a href="${instance.lanUrl}" target="_blank" class="url-link">${instance.lanUrl.replace('http://', '').replace(':' + instance.port, '')}</a>
+            ` : '<span class="text-muted">Not running</span>'}
         </div>
         <div class="instance-actions">
             ${instance.canStart ? `
                 <button class="btn btn-small btn-success" onclick="startInstance('${instance.port}')">Start</button>
             ` : ''}
             ${instance.canStop ? `
-                <button class="btn btn-small btn-warning" onclick="restartInstance('${instance.port}')">Restart</button>
                 <button class="btn btn-small btn-danger" onclick="stopInstance('${instance.port}')">Stop</button>
             ` : ''}
             ${instance.status === 'running' ? `
                 <button class="btn btn-small btn-primary" onclick="openInstance('${instance.port}')">Open</button>
-                <button class="btn btn-small btn-accent" onclick="createInstanceApp('${instance.port}', '${instance.name}')">📱 Create App</button>
             ` : ''}
-            <button class="btn btn-small btn-secondary" onclick="removeInstance('${instance.port}')">Remove</button>
-            <div class="instance-urls">
-                <a href="${instance.url}" target="_blank" class="url-link">local</a>
-                <a href="${instance.lanUrl}" target="_blank" class="url-link">network</a>
-            </div>
+            <button class="btn btn-small btn-secondary" onclick="removeInstance('${instance.port}')">×</button>
         </div>
     `;
     
@@ -246,6 +253,38 @@ async function removeInstance(port) {
     }
 }
 
+// Filter instances by type
+function filterInstances() {
+    const filterValue = document.getElementById('instance-filter').value;
+    const filteredInstances = filterValue === 'all' ? 
+        preparedInstances : 
+        preparedInstances.filter(i => i.type === filterValue);
+    
+    const list = document.getElementById('instances-list');
+    list.innerHTML = '';
+    
+    filteredInstances.forEach(instance => {
+        const row = createInstanceRow(instance);
+        list.appendChild(row);
+    });
+}
+
+// Toggle form fields based on instance type
+function toggleFormFields() {
+    const type = document.getElementById('new-type').value;
+    const workspaceField = document.getElementById('new-workspace');
+    const commandField = document.getElementById('new-command');
+    
+    if (type === 'gotty') {
+        workspaceField.style.display = 'none';
+        commandField.style.display = 'block';
+        commandField.placeholder = 'Command to run (e.g., htop, tail -f /var/log/system.log)';
+    } else {
+        workspaceField.style.display = 'block';
+        commandField.style.display = 'none';
+    }
+}
+
 // Add instance functionality
 function showAddForm() {
     const form = document.getElementById('add-instance-form');
@@ -258,7 +297,7 @@ function showAddForm() {
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
             
             // Focus first input for better UX
-            document.getElementById('new-port').focus();
+            document.getElementById('new-type').focus();
         }, 100);
         
         // Add haptic feedback if available
@@ -271,37 +310,61 @@ function showAddForm() {
 function hideAddForm() {
     document.getElementById('add-instance-form').style.display = 'none';
     // Clear form
+    document.getElementById('new-type').value = 'code-server';
     document.getElementById('new-port').value = '';
     document.getElementById('new-name').value = '';
     document.getElementById('new-description').value = '';
     document.getElementById('new-workspace').value = '';
+    document.getElementById('new-command').value = '';
+    // Reset field visibility
+    document.getElementById('new-workspace').style.display = 'block';
+    document.getElementById('new-command').style.display = 'none';
 }
 
 async function addInstance() {
+    const type = document.getElementById('new-type').value;
     const port = document.getElementById('new-port').value;
     const name = document.getElementById('new-name').value;
     const description = document.getElementById('new-description').value;
     const workspace = document.getElementById('new-workspace').value;
+    const command = document.getElementById('new-command').value;
     
-    if (!port || !name || !workspace) {
-        showToast('Port, name, and workspace are required');
-        return;
+    // Validate based on type
+    if (type === 'gotty') {
+        if (!port || !name || !command) {
+            showToast('Port, name, and command are required for GoTTY instances');
+            return;
+        }
+    } else {
+        if (!port || !name || !workspace) {
+            showToast('Port, name, and workspace are required for code-server instances');
+            return;
+        }
     }
     
     try {
+        const instanceData = {
+            type,
+            port: parseInt(port),
+            name,
+            description,
+            icon: type === 'gotty' ? '🖥️' : '⚡',
+            color: type === 'gotty' ? '#8b5cf6' : '#6b7280'
+        };
+        
+        // Add type-specific fields
+        if (type === 'gotty') {
+            instanceData.command = command;
+        } else {
+            instanceData.workspace = workspace;
+        }
+        
         const response = await fetch('/api/instances', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                port: parseInt(port),
-                name,
-                description,
-                workspace,
-                icon: '⚡',
-                color: '#6b7280'
-            })
+            body: JSON.stringify(instanceData)
         });
         
         const result = await response.json();
