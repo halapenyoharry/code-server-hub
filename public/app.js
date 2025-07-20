@@ -207,15 +207,25 @@ function restartInstance(port) {
 }
 
 function openInstance(port) {
+    // Find the instance to get its URL
+    const instance = preparedInstances.find(i => i.port == port);
+    if (!instance) {
+        showToast('Instance not found');
+        return;
+    }
+    
+    // Use the URL from the instance data
+    const url = instance.url;
+    
     // Check if we're in standalone mode
     const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
     
     if (isStandalone) {
         // In standalone mode, navigate directly to maintain PWA experience
-        window.location.href = `https://code.local:${port}`;
+        window.location.href = url;
     } else {
         // In browser mode, open in new tab
-        window.open(`https://code.local:${port}`, '_blank');
+        window.open(url, '_blank');
     }
 }
 
@@ -451,7 +461,9 @@ setInterval(updateSystemInfo, 2000);
 
 // Create individual app for code-server instance
 function createInstanceApp(port, name) {
-    const url = `https://code.local:${port}`;
+    // Find the instance to get its URL
+    const instance = preparedInstances.find(i => i.port == port);
+    const url = instance ? instance.lanUrl : `https://lothal.local:${port}`;
     
     if (/iPhone/.test(navigator.userAgent)) {
         // iPhone instructions

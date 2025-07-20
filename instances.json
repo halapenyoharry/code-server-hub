@@ -5,63 +5,54 @@
       "port": 5253,
       "name": "Harold Dev",
       "description": "Main development environment with Cline",
-      "workspace": "/Users/harold/code-server-instances/harold-dev/workspace",
       "icon": "🧠",
-      "color": "#0099ff"
+      "color": "#0099ff",
+      "workspace": "/Users/harold/code-server-instances/harold-dev/workspace"
     },
     "5254": {
       "type": "code-server",
       "port": 5254,
       "name": "Harold Dev Clone",
       "description": "Clone development environment",
-      "workspace": "/Users/harold/code-server-instances/harold-dev-clone/workspace",
       "icon": "🔄",
-      "color": "#10b981"
+      "color": "#10b981",
+      "workspace": "/Users/harold/code-server-instances/harold-dev-clone/workspace"
     },
     "5260": {
       "type": "code-server",
       "port": 5260,
       "name": "Admin",
       "description": "",
-      "workspace": "/Users/Harold/xplat",
       "icon": "⚡",
-      "color": "#6b7280"
+      "color": "#6b7280",
+      "workspace": "/Users/Harold/xplat"
     },
     "5270": {
       "type": "code-server",
       "port": 5270,
       "name": "hub",
       "description": "interface design",
-      "workspace": "/Users/haryold/Projects/",
       "icon": "⚡",
-      "color": "#6b7280"
+      "color": "#6b7280",
+      "workspace": "/Users/haryold/Projects/"
     },
     "5358": {
       "type": "code-server",
       "port": 5358,
       "name": "test",
       "description": "test",
-      "workspace": "/Users/harold/Projects/claude-api-server",
       "icon": "⚡",
-      "color": "#6b7280"
+      "color": "#6b7280",
+      "workspace": "/Users/harold/Projects/claude-api-server"
     },
-    "8080": {
+    "9923": {
       "type": "gotty",
-      "port": 8080,
-      "name": "System Monitor",
-      "description": "Real-time system monitoring",
-      "command": "htop",
+      "port": 9923,
+      "name": "claude-in-claude",
+      "description": "Claude CLI in terminal",
       "icon": "🖥️",
-      "color": "#8b5cf6"
-    },
-    "8081": {
-      "type": "gotty",
-      "port": 8081,
-      "name": "Log Viewer",
-      "description": "Tail system logs",
-      "command": "tail -f /var/log/system.log",
-      "icon": "📜",
-      "color": "#ec4899"
+      "color": "#8b5cf6",
+      "command": "claude"
     }
   }
 }
