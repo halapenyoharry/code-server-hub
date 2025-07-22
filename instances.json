@@ -3,53 +3,26 @@
     "5253": {
       "type": "code-server",
       "port": 5253,
-      "name": "Harold Dev",
-      "description": "Main development environment with Cline",
-      "icon": "🧠",
+      "name": "Projects",
+      "description": "Main projects directory",
+      "icon": "📁",
       "color": "#0099ff",
-      "workspace": "/Users/harold/code-server-instances/harold-dev/workspace"
+      "workspace": "/Users/harold/Projects"
     },
     "5254": {
       "type": "code-server",
       "port": 5254,
-      "name": "Harold Dev Clone",
-      "description": "Clone development environment",
-      "icon": "🔄",
+      "name": "Code Server Hub",
+      "description": "This project",
+      "icon": "🎛️",
       "color": "#10b981",
-      "workspace": "/Users/harold/code-server-instances/harold-dev-clone/workspace"
-    },
-    "5260": {
-      "type": "code-server",
-      "port": 5260,
-      "name": "Admin",
-      "description": "",
-      "icon": "⚡",
-      "color": "#6b7280",
-      "workspace": "/Users/Harold/xplat"
-    },
-    "5270": {
-      "type": "code-server",
-      "port": 5270,
-      "name": "hub",
-      "description": "interface design",
-      "icon": "⚡",
-      "color": "#6b7280",
-      "workspace": "/Users/haryold/Projects/"
-    },
-    "5358": {
-      "type": "code-server",
-      "port": 5358,
-      "name": "test",
-      "description": "test",
-      "icon": "⚡",
-      "color": "#6b7280",
-      "workspace": "/Users/harold/Projects/claude-api-server"
+      "workspace": "/Users/harold/servers/code-server-hub"
     },
     "9923": {
       "type": "gotty",
       "port": 9923,
-      "name": "claude-in-claude",
-      "description": "Claude CLI in terminal",
+      "name": "Claude Terminal",
+      "description": "Claude CLI",
       "icon": "🖥️",
       "color": "#8b5cf6",
       "command": "claude"

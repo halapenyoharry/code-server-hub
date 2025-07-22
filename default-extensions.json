@@ -1,0 +1,74 @@
+{
+  "defaultExtensions": [
+    {
+      "id": "esbenp.prettier-vscode",
+      "name": "Prettier",
+      "description": "Code formatter"
+    },
+    {
+      "id": "dbaeumer.vscode-eslint",
+      "name": "ESLint",
+      "description": "JavaScript linting"
+    },
+    {
+      "id": "eamodio.gitlens",
+      "name": "GitLens",
+      "description": "Git supercharged"
+    },
+    {
+      "id": "vscodevim.vim",
+      "name": "Vim",
+      "description": "Vim emulation"
+    },
+    {
+      "id": "ms-python.python",
+      "name": "Python",
+      "description": "Python language support"
+    },
+    {
+      "id": "ms-vscode.cpptools",
+      "name": "C/C++",
+      "description": "C/C++ language support"
+    },
+    {
+      "id": "golang.go",
+      "name": "Go",
+      "description": "Go language support"
+    },
+    {
+      "id": "rust-lang.rust-analyzer",
+      "name": "rust-analyzer",
+      "description": "Rust language support"
+    },
+    {
+      "id": "bradlc.vscode-tailwindcss",
+      "name": "Tailwind CSS IntelliSense",
+      "description": "Tailwind CSS support"
+    },
+    {
+      "id": "ritwickdey.liveserver",
+      "name": "Live Server",
+      "description": "Local development server"
+    },
+    {
+      "id": "ms-vscode-remote.remote-ssh",
+      "name": "Remote - SSH",
+      "description": "SSH remote development"
+    },
+    {
+      "id": "github.copilot",
+      "name": "GitHub Copilot",
+      "description": "AI pair programmer"
+    },
+    {
+      "id": "saoudrizwan.claude-dev",
+      "name": "Claude Dev (Cline)",
+      "description": "Claude AI assistant"
+    }
+  ],
+  "notes": {
+    "installation": "Extensions are installed to the shared directory on first use",
+    "customization": "Users can add/remove extensions per instance",
+    "persistence": "Extension settings are stored per instance"
+  }
+}

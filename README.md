@@ -27,7 +27,7 @@ A real-time web UI for discovering and managing all your local development servi
 ## Quick Start
 
 ```bash
-cd ~/Projects/code-server-hub
+cd ~/servers/code-server-hub
 chmod +x setup.sh
 ./setup.sh
 ./start.sh
