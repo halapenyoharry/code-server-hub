@@ -4,8 +4,7 @@
   "description": "Visual management hub for code-server and local development services",
   "main": "server.js",
   "author": "Harold",
-  "license": "MIT",
-  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/halapenyoharry/code-server-hub.git"

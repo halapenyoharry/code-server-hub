@@ -1,6 +1,57 @@
-# Code Server Hub
+# Code Server Hub 🎛️
 
-A real-time web UI for discovering and managing all your local development services, with special focus on code-server instances.
+A real-time web dashboard for discovering and managing all your local development services, with special powers for code-server instances and web terminals.
+
+## Installation
+
+### Prerequisites
+
+- **Node.js** 16+ and npm
+- **code-server** (for VS Code instances): `brew install code-server`
+- **ttyd** (for web terminals): `brew install ttyd`
+- **macOS** (currently optimized for macOS, Linux support coming)
+
+### Quick Install
+
+```bash
+# Clone the repository
+git clone https://github.com/halapenyoharry/code-server-hub.git
+cd code-server-hub
+
+# Run setup script
+./setup.sh
+
+# Start the hub
+./start.sh
+```
+
+### Manual Installation
+
+```bash
+# Install dependencies
+npm install
+
+# Copy environment template
+cp .env.example .env
+
+# Copy instances template and customize
+cp instances.json.example instances.json
+
+# Edit instances.json to configure your workspaces
+nano instances.json
+
+# Generate SSL certificates (for HTTPS)
+mkdir -p ~/code-server-data/shared/certs
+cd ~/code-server-data/shared/certs
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout code-server.key -out code-server.pem \
+  -subj "/CN=localhost"
+
+# Start the hub
+npm start
+```
+
+Then open http://localhost:7777
 
 ## Features
 
@@ -22,18 +73,49 @@ A real-time web UI for discovering and managing all your local development servi
 🌐 **Network Ready**
 - Access from iPad, phone, or any device
 - Real-time updates across all connected clients
-- No authentication needed (for local network use)
+- Self-signed HTTPS for secure access
 
-## Quick Start
+## Configuration
+
+### Environment Variables
+
+Create a `.env` file:
 
 ```bash
-cd ~/servers/code-server-hub
-chmod +x setup.sh
-./setup.sh
-./start.sh
+PORT=7777                          # Hub port
+NODE_ENV=production               # Environment
+CODE_SERVER_DATA_DIR=~/code-server-data  # Data directory
+CODE_SERVER_BIN=code-server       # Path to code-server
 ```
 
-Then open http://localhost:7777
+### Instance Configuration
+
+Edit `instances.json` to define your code-server instances:
+
+```json
+{
+  "instances": {
+    "5253": {
+      "type": "code-server",
+      "port": 5253,
+      "name": "Main Projects",
+      "description": "Primary workspace",
+      "icon": "📁",
+      "color": "#0099ff",
+      "workspace": "/path/to/projects"
+    },
+    "9923": {
+      "type": "gotty",
+      "port": 9923,
+      "name": "Terminal",
+      "description": "Web terminal",
+      "icon": "🖥️",
+      "color": "#8b5cf6",
+      "command": "bash"
+    }
+  }
+}
+```
 
 ## Architecture
 
@@ -81,3 +163,11 @@ This is step 1 of making the invisible visible:
 ## Contributing
 
 This is the beginning of democratizing service management. Ideas welcome!
+
+## License
+
+This project uses a custom license that's free for personal/educational use but requires permission for commercial use. See [LICENSE](LICENSE) for details.
+
+---
+
+Made with ❤️ and a healthy dose of "why doesn't this already exist?"

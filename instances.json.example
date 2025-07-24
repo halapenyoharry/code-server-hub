@@ -1,0 +1,31 @@
+{
+  "instances": {
+    "5253": {
+      "type": "code-server",
+      "port": 5253,
+      "name": "Main Projects",
+      "description": "Primary development workspace",
+      "icon": "📁",
+      "color": "#0099ff",
+      "workspace": "/path/to/your/projects"
+    },
+    "5254": {
+      "type": "code-server",
+      "port": 5254,
+      "name": "Secondary Workspace",
+      "description": "Another workspace",
+      "icon": "🎛️",
+      "color": "#10b981",
+      "workspace": "/path/to/another/workspace"
+    },
+    "9923": {
+      "type": "gotty",
+      "port": 9923,
+      "name": "Web Terminal",
+      "description": "Terminal in browser",
+      "icon": "🖥️",
+      "color": "#8b5cf6",
+      "command": "bash"
+    }
+  }
+}

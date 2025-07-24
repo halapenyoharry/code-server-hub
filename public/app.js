@@ -144,8 +144,7 @@ function createInstanceRow(instance) {
         </div>
         <div class="instance-urls">
             ${instance.status === 'running' ? `
-                <a href="${instance.url}" target="_blank" class="url-link">localhost</a>
-                <a href="${instance.lanUrl}" target="_blank" class="url-link">${instance.lanUrl.replace('http://', '').replace(':' + instance.port, '')}</a>
+                <a href="${instance.url}" target="_blank" class="url-link">${instance.url}</a>
             ` : '<span class="text-muted">Not running</span>'}
         </div>
         <div class="instance-actions">
@@ -394,7 +393,7 @@ async function addInstance() {
 
 // Service actions
 function openService(port) {
-    window.open(`http://localhost:${port}`, '_blank');
+    window.open(`http://${window.location.hostname}:${port}`, '_blank');
 }
 
 function openServiceUrl(url) {

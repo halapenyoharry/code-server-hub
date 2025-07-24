@@ -18,6 +18,15 @@
       "color": "#10b981",
       "workspace": "/Users/harold/servers/code-server-hub"
     },
+    "7771": {
+      "type": "code-server",
+      "port": 7771,
+      "name": "lilccwrapper",
+      "description": "lilccwrapper",
+      "icon": "⚡",
+      "color": "#6b7280",
+      "workspace": "/Users/harold/Projects/lilCCwrapper"
+    },
     "9923": {
       "type": "gotty",
       "port": 9923,

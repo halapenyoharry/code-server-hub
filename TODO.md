@@ -17,7 +17,7 @@
 
 **Workaround**: Users must manually run:
 ```bash
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /Users/harold/servers/code-server-data/shared/certs/code-server.pem
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ~/code-server-data/shared/certs/code-server.pem
 ```
 
 ## Medium Priority

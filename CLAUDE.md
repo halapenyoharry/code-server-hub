@@ -79,7 +79,7 @@ The discovery engine (`lib/discovery.js`) uses multiple strategies:
 
 ### Extension Management
 Default VS Code extensions are configured in `default-extensions.json`:
-- Shared extensions directory: `/Users/harold/servers/code-server-data/shared/extensions`
+- Shared extensions directory: `~/code-server-data/shared/extensions`
 - Automatic installation on first use
 - Extensions include: Prettier, ESLint, GitLens, Vim, language support, etc.
 
@@ -151,10 +151,10 @@ The hub scans these port ranges:
 - WebSocket reduces polling overhead for real-time updates
 
 ### Data Directories
-- Code-server data: `/Users/harold/servers/code-server-data/`
+- Code-server data: `~/code-server-data/`
 - Instance configurations: `instances.json`
 - Default extensions: `default-extensions.json`
-- Shared extensions: `/Users/harold/servers/code-server-data/shared/extensions`
+- Shared extensions: `~/code-server-data/shared/extensions`
 
 ## Future Enhancements Planned
 - AI-powered service identification and configuration
