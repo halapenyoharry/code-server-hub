@@ -67,6 +67,10 @@ This is step 1 of making the invisible visible:
 - Create visual dependency graphs
 - Enable cross-service orchestration
 
+## Known Issues
+
+- **SSL Certificate Trust**: VS Code extensions may fail with SSL errors until certificates are manually trusted. See [TODO.md](TODO.md) for details and workaround.
+
 ## Tech Stack
 
 - **Backend**: Node.js + Express + Socket.io
