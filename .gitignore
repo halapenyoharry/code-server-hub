@@ -157,3 +157,7 @@ nohup.out
 # Private configuration
 config/paths.json
 .env.local
+
+# Local data directory (like models/output in ComfyUI)
+data/
+!data/.gitkeep
