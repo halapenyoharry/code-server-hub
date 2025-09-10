@@ -1,6 +1,6 @@
 {
   "name": "code-server-hub",
-  "version": "0.1.0",
+  "version": "0.2.0-alpha.1",
   "description": "Visual management hub for code-server and local development services",
   "main": "server.js",
   "author": "Harold",

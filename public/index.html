@@ -557,10 +557,20 @@
         /* Hide tab content */
         .tab-content {
             display: none;
+            /* Fix scrolling issues */
+            height: calc(100vh - 200px); /* Adjust based on header/tab height */
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 20px;
         }
         
         .tab-content.active {
             display: block;
+        }
+        
+        /* Adjust height in standalone mode */
+        body.standalone-mode .tab-content {
+            height: calc(100vh - 220px); /* Account for status bar */
         }
         
         /* iPhone-specific enhancements */

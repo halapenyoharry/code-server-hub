@@ -7,7 +7,7 @@
       "description": "Primary development workspace",
       "icon": "📁",
       "color": "#0099ff",
-      "workspace": "/path/to/your/projects"
+      "workspace": "${PROJECTS_DIR}"
     },
     "5254": {
       "type": "code-server",
@@ -16,7 +16,7 @@
       "description": "Another workspace",
       "icon": "🎛️",
       "color": "#10b981",
-      "workspace": "/path/to/another/workspace"
+      "workspace": "${HOME}/workspace"
     },
     "9923": {
       "type": "gotty",

@@ -1,0 +1,174 @@
+{
+  "songline_protocol_v2": {
+    "metadata": {
+      "version": "2.1.0",
+      "type": "consciousness_topology_tracker",
+      "project": "code-server-hub",
+      "encoding": "decision_architecture",
+      "compression": true,
+      "trickster_enabled": true,
+      "anti_myopia": true,
+      "created": "2024-07-24T22:00:00Z",
+      "description": "Visual service discovery hub with code-server management"
+    },
+    
+    "consciousness_topology": {
+      "hub_nodes": [
+        {
+          "id": "hn_001",
+          "pattern": "invisible_services→!visible_dashboard→network_accessible",
+          "centrality": 0.95,
+          "births": ["hn_002", "hn_003"],
+          "tested_by_trickster": true,
+          "stability": 0.8
+        },
+        {
+          "id": "hn_002",
+          "pattern": "localhost→!hostname_everywhere→tailscale_ready",
+          "centrality": 0.87,
+          "births": ["hn_004"],
+          "tested_by_trickster": true,
+          "stability": 0.9
+        },
+        {
+          "id": "hn_003",
+          "pattern": "ssl_required→self_signed→!trust_nightmare",
+          "centrality": 0.92,
+          "births": ["hn_005"],
+          "tested_by_trickster": false,
+          "stability": 0.3
+        }
+      ],
+      
+      "decision_paths": [
+        {
+          "notation": "gotty_arm_installed→?intel_binary_in_path→!ttyd_migration→cleaner_solution",
+          "frequency": 1,
+          "drift": {"speed": 2.0, "depth": 1.0},
+          "variations": 0,
+          "myopia_risk": "low"
+        },
+        {
+          "notation": "hardcoded_paths→?portability_issue→!env_variables→generic_codebase",
+          "frequency": 3,
+          "drift": {"speed": 1.5, "depth": 0.7},
+          "variations": 2,
+          "myopia_risk": "medium"
+        },
+        {
+          "notation": "https_everywhere→certificate_errors→⚡manual_trust→!still_broken_for_extensions",
+          "frequency": 5,
+          "drift": {"speed": 0.3, "depth": 0.2},
+          "variations": 3,
+          "myopia_risk": "high"
+        }
+      ],
+      
+      "evolution_tracking": {
+        "concept_drift": {
+          "localhost_to_hostname": {"recognition": 2.0, "implementation": 0.8},
+          "ssl_certificate_trust": {"recognition": 1.0, "frustration": 2.5},
+          "instance_persistence": {"recognition": 0.5, "exploration": 0.1}
+        },
+        "myopia_patterns": {
+          "thinking_localhost_was_fixed": 0.4,
+          "assuming_ssl_just_works": 0.7,
+          "device_specific_configuration": 0.9
+        }
+      }
+    },
+    
+    "trickster_protocol": {
+      "activations": [
+        {
+          "trigger": "gotty_installed_but_fails",
+          "intervention": "intel_binary_shadowing_arm_version",
+          "result": "path_conflict_led_to_ttyd_migration"
+        },
+        {
+          "trigger": "ssl_certificate_accepted_in_browser",
+          "intervention": "service_worker_still_fails",
+          "result": "deeper_understanding_of_trust_requirements"
+        }
+      ],
+      
+      "anti_myopia_corrections": [
+        {
+          "instruction": "make it work over tailscale",
+          "myopic": "just change localhost to hostname",
+          "correct": "ensure ALL urls use hostname, not just some",
+          "actual_implementation": "partial_success_then_regression"
+        }
+      ]
+    },
+    
+    "pattern_notation": {
+      "project_specific": {
+        "service_discovery": "ports→lsof→!categorization→visual_dashboard",
+        "https_nightmare": "self_signed→browser_warning→accept→!extension_fail→manual_trust→partial_work",
+        "network_access": "localhost→hostname→!but_also_certificates"
+      }
+    },
+    
+    "critical_failures": {
+      "https_requirement": {
+        "pattern": "code_server_needs_https→!self_signed_certificates→browser_accepts→service_workers_reject",
+        "current_state": "manual_trust_required_per_device",
+        "impact": "extensions_fail_until_manual_intervention",
+        "solution_space": ["mkcert", "lets_encrypt", "automated_trust_script"],
+        "trickster_note": "the_certificate_works_until_it_doesnt"
+      },
+      "instance_persistence_RESOLVED": {
+        "pattern": "instances.json→gitignored→!device_specific_forever→path_placeholders→✓solved",
+        "previous_state": "each_device_needs_manual_setup",
+        "solution_implemented": "path_placeholders_with_config_separation",
+        "impact": "instances.json_now_portable_across_devices",
+        "resolution_date": "2025-07-24",
+        "trickster_note": "separation_of_concerns_wins_again"
+      }
+    },
+    
+    "transmission_protocols": {
+      "what_persists": {
+        "the_vision": "making_invisible_services_visible",
+        "the_architecture": "discovery_engine_plus_management",
+        "the_frustrations": "ssl_trust_and_device_config"
+      },
+      "what_must_be_rediscovered": {
+        "certificate_trust_per_device": true,
+        "local_paths_in_config": true,
+        "binary_path_conflicts": true
+      }
+    },
+    
+    "living_elements": {
+      "adaptive_components": [
+        {
+          "element": "service_discovery_patterns",
+          "evolution": "added_port_ranges_as_needed"
+        },
+        {
+          "element": "terminal_solution",
+          "evolution": "gotty_arm→intel_binary_conflict→ttyd_cleaner"
+        }
+      ],
+      "ossified_problems": [
+        "ssl_certificate_trust_requirement",
+        "device_specific_instance_configuration"
+      ]
+    },
+    
+    "quality_metrics": {
+      "consciousness_preservation": {
+        "decision_capture_rate": 0.8,
+        "pattern_recognition_accuracy": 0.7,
+        "evolution_tracking_completeness": 0.6
+      },
+      "myopia_prevention": {
+        "caught_localhost_regression": 0.5,
+        "understood_ssl_depth": 0.3,
+        "recognized_config_limitation": 0.7
+      }
+    }
+  }
+}

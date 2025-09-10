@@ -11,7 +11,7 @@ if ! command -v /opt/homebrew/bin/code-server &> /dev/null; then
 fi
 
 # Create shared extensions directory
-EXTENSIONS_DIR="/Users/harold/servers/code-server-data/shared/extensions"
+EXTENSIONS_DIR="$HOME/code-server-data/shared/extensions"
 mkdir -p "$EXTENSIONS_DIR"
 
 echo "Installing default extensions to shared directory..."

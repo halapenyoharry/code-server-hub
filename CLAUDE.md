@@ -16,6 +16,10 @@ npm run setup        # Run initial setup (creates .env file)
 ./start.sh           # Production mode
 ./setup.sh           # Initial project setup
 ./setup-extensions.sh # Setup default VS Code extensions
+
+# Additional utility scripts
+./fix-https.sh       # Fix HTTPS certificate issues
+./fix-clipboard.sh   # Fix clipboard functionality
 ```
 
 ### Testing & Quality
@@ -74,8 +78,10 @@ The discovery engine (`lib/discovery.js`) uses multiple strategies:
 
 ### Real-time Communication
 - Socket.io manages bidirectional communication
-- Events: `services-update`, `instances-update`, `control-service`, `manage-instance`
+- **Events**: `services-update`, `instances-update`, `control-service`, `manage-instance`, `refresh-instances`
+- **Client events**: `control-result`, `instance-result`, `instances-update`
 - Automatic reconnection and state synchronization
+- Discovery updates broadcast every 5 seconds to all connected clients
 
 ### Extension Management
 Default VS Code extensions are configured in `default-extensions.json`:
@@ -87,7 +93,13 @@ Default VS Code extensions are configured in `default-extensions.json`:
 Environment variables (`.env`):
 - `PORT`: Server port (default: 7777)
 - `NODE_ENV`: Environment mode (development/production)
-- Additional service-specific configs can be added
+- `CODE_SERVER_DATA_DIR`: Directory for code-server data (default: `~/code-server-data`)
+- `CODE_SERVER_BIN`: Path to code-server binary (default: `code-server`)
+
+Path placeholders supported in `instances.json`:
+- `${PROJECTS_DIR}`, `${SERVERS_DIR}`, `${CODE_SERVER_DATA}`: From `config/paths.json`
+- `${HOME}`: Environment variable for home directory
+- Configure `config/paths.json` for portable workspace definitions across machines
 
 ## Development Workflow
 
@@ -122,16 +134,15 @@ Environment variables (`.env`):
 
 ### Port Allocation Strategy
 The hub scans these port ranges:
-- 3000-3010: Common Node.js apps
-- 4000-4010: Alternative Node.js range
-- 5000-5010: Python Flask/FastAPI
-- 5253-5255: Configured code-server instances
-- 8000-8010: Django/Python servers
-- 8080-8090: Alternative HTTP servers
-- 8443: HTTPS development
-- 9000-9010: PHP/Other services
-- 9923: GoTTY terminal
-- 11434: Ollama AI service
+- **Code servers**: 8080, 8443, 3000, 8089-8091, 5253-5255
+- **Web servers**: 80, 443, 8000-8001, 3000-3001, 5000-5001, 4200, 9000
+- **Databases**: 5432 (PostgreSQL), 3306 (MySQL), 27017 (MongoDB), 6379 (Redis), 9200 (Elasticsearch), 5984 (CouchDB)
+- **Development tools**: 9229-9230 (Node.js debug), 6006 (Storybook), 19000-19001 (React Native)
+- **AI services**: 11434 (Ollama), 8765, 9999, 7860-7861
+
+Service identification patterns:
+- Uses process name matching via regex patterns defined in `SERVICE_PATTERNS`
+- Supports code-server, databases (PostgreSQL, MySQL, MongoDB, Redis), Docker, Node.js, Python, MCP servers, Ollama, Jupyter
 
 ## Important Patterns
 
@@ -151,10 +162,24 @@ The hub scans these port ranges:
 - WebSocket reduces polling overhead for real-time updates
 
 ### Data Directories
-- Code-server data: `~/code-server-data/`
-- Instance configurations: `instances.json`
-- Default extensions: `default-extensions.json`
-- Shared extensions: `~/code-server-data/shared/extensions`
+- **Code-server data**: `~/code-server-data/` (configurable via `CODE_SERVER_DATA_DIR`)
+- **Instance configurations**: `instances.json` (port-based instance definitions)
+- **Default extensions**: `default-extensions.json` (VS Code extensions auto-installed)
+- **Shared extensions**: `~/code-server-data/shared/extensions`
+- **SSL certificates**: `~/code-server-data/shared/certs` (for HTTPS)
+- **Path configuration**: `config/paths.json` (portable workspace paths)
+
+Directory structure:
+```
+~/code-server-data/
+├── shared/
+│   ├── extensions/     # Shared VS Code extensions
+│   └── certs/          # SSL certificates
+└── instances/          # Per-instance data
+    ├── 5253/
+    ├── 5254/
+    └── ...
+```
 
 ## Future Enhancements Planned
 - AI-powered service identification and configuration

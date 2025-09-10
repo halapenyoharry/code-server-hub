@@ -1,0 +1,47 @@
+{
+  "zen-browser": {
+    "name": "Zen Browser (Firefox-based)",
+    "clipboard_support": "partial",
+    "fixes": {
+      "about:config": {
+        "dom.events.asyncClipboard.clipboardItem": true,
+        "dom.events.asyncClipboard.read": true,
+        "dom.events.asyncClipboard.write": true
+      },
+      "workarounds": [
+        "Use Cmd+C/V in editor, Cmd+Shift+C/V in terminal",
+        "Middle-click paste works in terminal",
+        "Shift+Right-click for browser context menu"
+      ]
+    }
+  },
+  "brave": {
+    "name": "Brave Browser",
+    "clipboard_support": "full",
+    "fixes": {
+      "flags": {
+        "clipboard-read": "enabled",
+        "clipboard-write": "enabled"
+      },
+      "workarounds": [
+        "Disable shields for the site if clipboard fails",
+        "brave://settings/content/clipboard - Allow site"
+      ]
+    }
+  },
+  "safari": {
+    "name": "Safari",
+    "clipboard_support": "limited",
+    "fixes": {
+      "settings": {
+        "path": "Settings → Websites → Clipboard",
+        "action": "Allow for code-server sites"
+      },
+      "workarounds": [
+        "Shift+Right-click for native menu",
+        "Use keyboard shortcuts instead of context menu",
+        "Cmd+A, Cmd+C works better than selection copy"
+      ]
+    }
+  }
+}

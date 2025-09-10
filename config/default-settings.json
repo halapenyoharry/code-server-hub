@@ -1,0 +1,44 @@
+{
+  "// Clipboard and Copy/Paste Settings": "",
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.rightClickBehavior": "copyPaste",
+  "editor.copyWithSyntaxHighlighting": true,
+  "editor.emptySelectionClipboard": true,
+  
+  "// Terminal clipboard command handling": "",
+  "terminal.integrated.commandsToSkipShell": [
+    "workbench.action.terminal.copySelection",
+    "workbench.action.terminal.paste"
+  ],
+  
+  "// macOS specific settings": "",
+  "terminal.integrated.macOptionClickForcesSelection": true,
+  "terminal.integrated.macOptionIsMeta": false,
+  
+  "// Editor selection settings": "",
+  "editor.selectionClipboard": true,
+  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+  
+  "// Workbench settings for better interaction": "",
+  "workbench.editor.enablePreview": false,
+  "workbench.list.openMode": "doubleClick",
+  
+  "// Additional accessibility settings": "",
+  "editor.accessibilitySupport": "auto",
+  "terminal.integrated.accessibilitySupport": "auto",
+  
+  "// Context menu settings": "",
+  "editor.contextmenu": true,
+  
+  "// Mouse behavior": "",
+  "editor.mouseWheelZoom": false,
+  "editor.multiCursorModifier": "ctrlCmd",
+  
+  "// Performance settings that may help with responsiveness": "",
+  "editor.fastScrollSensitivity": 5,
+  "editor.renderWhitespace": "selection",
+  
+  "// Terminal settings for better interaction": "",
+  "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.detectLocale": "auto"
+}

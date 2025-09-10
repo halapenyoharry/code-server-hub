@@ -1,0 +1,5 @@
+{
+  "PROJECTS_DIR": "/path/to/your/projects",
+  "CODE_SERVER_DATA": "/path/to/code-server-data",
+  "SERVERS_DIR": "/path/to/servers"
+}

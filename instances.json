@@ -1,5 +1,14 @@
 {
   "instances": {
+    "2030": {
+      "type": "code-server",
+      "port": 2030,
+      "name": "writing-studio",
+      "description": "my place to create with versioning",
+      "icon": "⚡",
+      "color": "#6b7280",
+      "workspace": "/Users/harold/Obsidian/Ulysses/Ai Supremacy"
+    },
     "5253": {
       "type": "code-server",
       "port": 5253,

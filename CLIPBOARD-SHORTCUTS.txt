@@ -1,0 +1,27 @@
+CODE SERVER CLIPBOARD QUICK REFERENCE
+====================================
+
+UNIVERSAL SHORTCUTS (Work in ALL Browsers)
+------------------------------------------
+EDITOR:
+  Copy:  Cmd+C (select with Cmd+A first if needed)
+  Paste: Cmd+V
+  Cut:   Cmd+X
+
+TERMINAL:
+  Copy:  Cmd+Shift+C
+  Paste: Cmd+Shift+V or Shift+Insert
+  
+RIGHT-CLICK FIX:
+  Use Shift+Right-click for browser's native menu
+
+BROWSER-SPECIFIC FIXES
+----------------------
+ZEN/FIREFOX: Set asyncClipboard flags in about:config
+BRAVE: Disable shields or allow clipboard in settings
+SAFARI: Enable clipboard in Settings → Websites → Clipboard
+
+ALWAYS WORKS:
+- Keyboard shortcuts above
+- Middle mouse paste in terminal
+- Cmd+A to select all, then Cmd+C

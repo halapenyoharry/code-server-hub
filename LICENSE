@@ -1,49 +1,14 @@
-The Code Server Hub License (CSHL)
+Custom License for Code Server Hub
 
-Copyright (c) 2024 Harold
+Copyright (c) 2025 Harold Young
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to use, copy, modify, merge, publish, distribute, and sublicense the Software for personal, educational, or non-commercial purposes, subject to the following conditions:
 
-1. The above copyright notice and this permission notice shall be included in all
-   copies or substantial portions of the Software.
+COMMERCIAL USE RESTRICTION:
+Commercial use of this software is prohibited without prior written permission from the copyright holder. For commercial licensing inquiries, please contact: halapenyoharry@gmail.com
 
-2. **Commercial Use Clause**: If you use this Software for commercial purposes 
-   (defined as using the Software to, directly or indirectly, establish or 
-   maintain a revenue stream), you must:
-   
-   a) Contact the author at the repository issues page to discuss licensing terms
-   b) Obtain written permission before deploying in production
-   c) Negotiate fair compensation based on your use case
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-   "Commercial purposes" includes but is not limited to:
-   - Selling the Software or services built on it
-   - Using the Software as part of a paid service
-   - Using the Software to manage infrastructure for profit
-   - Including the Software in a commercial product
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-3. **Attribution**: You must give appropriate credit, provide a link to the 
-   original repository, and indicate if changes were made.
-
-4. **Share Improvements**: If you improve the Software, consider contributing 
-   your improvements back to the community.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
----
-
-This license is designed to keep the Software free for personal and educational
-use while ensuring commercial users contribute back to its development. If you're
-unsure whether your use case requires a commercial license, please ask!
-
-Remember: Good code is meant to be shared, but servers don't run on hopes and dreams.
+HAVE FUN: This software is created with the intent to make developers' lives easier and more enjoyable. Use it, learn from it, improve it, and most importantly - have fun with it!

@@ -151,6 +151,9 @@ Temporary Items
 .code-server-hub-cache/
 temp/
 tmp/
-instances.json
 server.log
 nohup.out
+
+# Private configuration
+config/paths.json
+.env.local
