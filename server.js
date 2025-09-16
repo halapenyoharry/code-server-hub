@@ -1,5 +1,7 @@
 const express = require('express');
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const socketIO = require('socket.io');
 const cors = require('cors');
 const path = require('path');
@@ -8,7 +10,25 @@ const { setupRoutes } = require('./lib/routes');
 const CodeServerManager = require('./lib/codeserver-manager');
 
 const app = express();
-const server = http.createServer(app);
+
+// Check for SSL certificates
+const CERT_DIR = path.join(__dirname, 'data', 'shared', 'certs');
+const SSL_KEY = path.join(CERT_DIR, 'code-server.key');
+const SSL_CERT = path.join(CERT_DIR, 'code-server.pem');
+const hasSSL = fs.existsSync(SSL_KEY) && fs.existsSync(SSL_CERT);
+
+// Create appropriate server based on SSL availability
+let server;
+if (hasSSL) {
+  const sslOptions = {
+    key: fs.readFileSync(SSL_KEY),
+    cert: fs.readFileSync(SSL_CERT)
+  };
+  server = https.createServer(sslOptions, app);
+} else {
+  server = http.createServer(app);
+}
+
 const io = socketIO(server, {
   cors: {
     origin: "*",
@@ -131,11 +151,12 @@ setupRoutes(app, { services, codeServers, codeServerManager });
 const PORT = process.env.PORT || 7777;
 server.listen(PORT, '0.0.0.0', () => {
   const hostname = require('os').hostname();
+  const protocol = hasSSL ? 'https' : 'http';
   console.log(`
 🚀 Code Server Hub running!
 
-Local: http://localhost:${PORT}
-Network: http://${hostname}:${PORT}
+Local: ${protocol}://localhost:${PORT}
+Network: ${protocol}://${hostname}:${PORT}
 
 Features:
 ✅ Manage YOUR prepared code-server instances (5253, 5254, 5255)
@@ -144,6 +165,7 @@ Features:
 ✅ Real-time service monitoring with visual dashboard
 ✅ iPad/mobile-friendly interface
 ✅ System resource monitoring
+${hasSSL ? '✅ Secure HTTPS connection' : '⚠️  Running on HTTP (run ./fix-https.sh for HTTPS)'}
 
 Tabs:
 📂 Code Servers - Manage your prepared instances
