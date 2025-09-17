@@ -181,6 +181,15 @@ Directory structure:
     └── ...
 ```
 
+## CRITICAL SECURITY REQUIREMENTS
+
+⚠️  **HTTPS IS MANDATORY - DO NOT DISABLE UNDER ANY CIRCUMSTANCES** ⚠️
+- Code-server instances MUST use HTTPS for clipboard functionality
+- HTTPS is required for security and VS Code extension compatibility
+- SSL certificates are generated with mkcert and must be maintained
+- NEVER switch to HTTP "for mobile compatibility" or any other reason
+- If HTTPS has issues, FIX THE CERTIFICATES, don't disable HTTPS
+
 ## Future Enhancements Planned
 - AI-powered service identification and configuration
 - Service dependency mapping
